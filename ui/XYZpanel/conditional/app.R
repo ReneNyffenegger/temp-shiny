@@ -3,8 +3,10 @@ ui <- fluidPage(
   selectInput(
      inputId = 'panel',
      label   = 'Choose Panel',
-#    choices = c('diamonds', 'rock', 'pressure', 'cars')
-     choices = c('Panel one' = 'pnl_1', 'Panel two' = 'pnl_2', 'Panel three' = 'pnl_3')
+     choices = c('Panel one'   = 'pnl_1',
+                 'Panel two'   = 'pnl_2',
+                 'Panel three' = 'pnl_3'
+                )
   ),
 
   conditionalPanel(
@@ -19,35 +21,35 @@ ui <- fluidPage(
   #      The JavaScript objects(?) input and output
   #      reflect the current respective values.
   #
-     condition    = 'output.nrows',
-     checkboxInput("headonly", "Only use first 1000 rows")
+     condition    = 'output.show_panel == 1',
+     tags$div('This is the first Panel')
+  ),
+
+  conditionalPanel(
+     condition    = 'output.show_panel == 2',
+     tags$div('This is the second Panel')
+  ),
+
+  conditionalPanel(
+     condition    = 'output.show_panel == 3',
+     tags$div('This is the third Panel')
   )
 
 );
 
 server <- function(input, output, session) {
 
-  INPUT <- reactive({
+  output$show_panel <- reactive({
 
     switch(input$panel,
-#          'pnl_1'    = rock,
-           'pnl_2'    = pressure,
-           'pnl_3'    = cars
+           'pnl_1'    = 1,
+           'pnl_2'    = 2,
+           'pnl_3'    = 3
     )
 
-#   switch(input$panel,
-#          "rock"     = rock,
-#          "pressure" = pressure,
-#          "cars"     = cars
-#   )
+  });
 
-  });
-  
-  output$nrows <- reactive({
-    nrow(INPUT())
-  });
-  
-  outputOptions(output, "nrows", suspendWhenHidden = FALSE)  
+  outputOptions(output, 'show_panel', suspendWhenHidden = FALSE)
 };
 
 shinyApp(ui, server)
