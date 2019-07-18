@@ -1,8 +1,8 @@
 ui <- fluidPage(
 
   selectInput(
-     inputId = 'dataset',
-     label   = 'Choose wisely',
+     inputId = 'panel',
+     label   = 'Choose Panel',
      choices = c('diamonds', 'rock', 'pressure', 'cars')
   ),
 
@@ -17,7 +17,7 @@ server <- function(input, output, session) {
 
   INPUT <- reactive({
 
-    switch(input$dataset,
+    switch(input$panel,
            "rock"     = rock,
            "pressure" = pressure,
            "cars"     = cars
@@ -30,9 +30,6 @@ server <- function(input, output, session) {
   });
   
   outputOptions(output, "nrows", suspendWhenHidden = FALSE)  
-}
+};
 
-shinyApp(
-  ui,
-  server
-)
+shinyApp(ui, server)
