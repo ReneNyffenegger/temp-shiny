@@ -13,7 +13,7 @@ ui <- fluidPage(
   #
   #  conditionalPanel() wraps a set of UI elements that
   #  then can be dynamically shown/hidden depending on
-  #  the value of a JavaScript expression
+  #  the value of a JavaScript expression.
   #
   #  condition:
   #      The JavaScript expression that determines
